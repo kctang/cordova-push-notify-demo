@@ -1,0 +1,16 @@
+{
+  "name": "www",
+  "version": "0.0.1",
+  "main": [
+    "main.js"
+  ],
+  "dependencies": {
+    "sinon": "~1.5.2",
+    "requirejs": "~2.1.2",
+    "qunit": "~1.10.0",
+    "jskit": "latest",
+    "jskit-jquery": "latest",
+    "zepto": "~1.0.0rc1",
+    "jquery": "~1.9.1"
+  }
+}
