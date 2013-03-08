@@ -1,0 +1,6 @@
+*.iml
+.idea
+out
+src/www/components
+android/assets/www
+android/gen
