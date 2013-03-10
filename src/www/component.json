@@ -11,6 +11,8 @@
     "jskit": "latest",
     "jskit-jquery": "latest",
     "zepto": "~1.0.0rc1",
-    "jquery": "~1.9.1"
+    "jquery": "~1.9.1",
+    "requirejs-text": "~2.0.5",
+    "handlebars.js": "~1.0.10"
   }
 }
