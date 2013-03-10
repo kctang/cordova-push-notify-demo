@@ -2,11 +2,13 @@ module.exports = function (grunt) {
     grunt.initConfig({
         server: {
             port: 8080,
-            base: '../android/assets/www'
+            base: 'www'
+//            base: '../android/assets/www'
         },
 
         watch: {
             files: "www"
+//            files: "../android/assets/www"
         }
     });
 
