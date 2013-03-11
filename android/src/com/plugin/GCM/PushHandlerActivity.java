@@ -8,18 +8,17 @@
 
 package com.plugin.GCM;
 
-import java.util.Iterator;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
 
 public class PushHandlerActivity extends Activity
 {
@@ -69,8 +68,8 @@ public class PushHandlerActivity extends Activity
 			while (it.hasNext())
 			{
 				String key = it.next();
-				String value = extras.getString(key);	
-        	
+				String value = String.valueOf(extras.get(key));
+
 				// System data from Android
 				if (key.equals("from") || key.equals("collapse_key"))
 				{

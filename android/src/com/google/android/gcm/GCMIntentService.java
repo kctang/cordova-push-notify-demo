@@ -1,14 +1,6 @@
 package com.google.android.gcm;
 
-import java.util.List;
-
-import com.plugin.GCM.PushHandlerActivity;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -19,7 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import com.plugin.GCM.PushHandlerActivity;
 import com.plugin.GCM.PushPlugin;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 @SuppressLint("NewApi")
@@ -75,7 +70,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     	boolean	foreground = this.isInForeground();
     	
     	extras.putBoolean("foreground", foreground);
-    	
+
     	if (foreground)
     		PushHandlerActivity.sendToApp(extras);
     	else
@@ -134,15 +129,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 	
 	public boolean isInForeground()
 	{
-	    ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-	    List<RunningTaskInfo> services = activityManager
-	    		.getRunningTasks(Integer.MAX_VALUE);
+	    /*ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+	    List<RunningTaskInfo> services = activityManager.getRunningTasks(Integer.MAX_VALUE);
 
 	    if (services.get(0).topActivity.getPackageName().toString()
 	            .equalsIgnoreCase(getApplicationContext().getPackageName().toString()))
 	        return true;
 		
-		return false;
+		return false;*/
+        return true;
 	}	
 
   @Override

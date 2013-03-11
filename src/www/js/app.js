@@ -29,11 +29,14 @@ var modules = {
         'm/page',
         'm/main-swipe'
     ],
-    'jqmReady': []
+    'jqmReady': [
+        // pageInit should not be here
+        'm/demo'
+    ]
 }
 
 // WARNING: Tweaking these code affects lifecycle of cordova & jquery-mobile (complex).
-require(['jskit', 'jquery-mobile', 'cordova', 'text'], function (jskit, jqm) {
+require(['jskit', 'jquery-mobile', 'text'], function (jskit, jqm) {
         // --- jqm loaded (autoInitializePage=false)
         patchJqm();
 

@@ -1,6 +1,8 @@
 require(['jquery'], function ($) {
     console.debug('Loaded [main-swipe]');
 
+    // TODO: potential out of sync code - to test, setTimeout() this code
+
     // http://view.jquerymobile.com/1.3.0/docs/examples/panels/panel-swipe-open.php
     $(document).on("pageinit", "#home", function () {
         $(document).on("swipeleft swiperight", "#home", function (e) {
