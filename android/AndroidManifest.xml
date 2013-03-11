@@ -71,7 +71,7 @@
                 <category android:name="net.big2.demo.pnd" />
             </intent-filter>
         </receiver>
-        <service android:name="com.google.android.gcm.GCMIntentService" />
+        <service android:name=".GCMIntentService" />
 
     </application>
 

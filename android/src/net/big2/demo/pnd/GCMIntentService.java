@@ -1,4 +1,4 @@
-package com.google.android.gcm;
+package net.big2.demo.pnd;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import com.google.android.gcm.GCMBaseIntentService;
 import com.plugin.GCM.PushHandlerActivity;
 import com.plugin.GCM.PushPlugin;
 import org.json.JSONException;
