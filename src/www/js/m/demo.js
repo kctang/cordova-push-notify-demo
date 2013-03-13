@@ -64,8 +64,6 @@ require(['jquery', 'jskit'], function () {
 
 
 function onNotificationGCM(e) {
-    console.log('XXX: GCM CALLED!!!');
-
     console.log(e);
 
     switch (e.event) {

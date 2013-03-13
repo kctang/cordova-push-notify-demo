@@ -19,16 +19,8 @@
 
 package net.big2.demo.pnd;
 
-import android.os.Bundle;
-import org.apache.cordova.*;
+import net.big2.pushnotify.PushNotifyDroidGap;
 
-public class pnd extends DroidGap {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Set by <content src="index.html" /> in config.xml
-        super.loadUrl(Config.getStartUrl());
-        //super.loadUrl("file:///android_asset/www/index.html")
-    }
+public class PushNotifyDemo extends PushNotifyDroidGap {
+
 }
-

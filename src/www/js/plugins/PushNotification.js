@@ -1,3 +1,4 @@
+// TODO: review & refactor
 
 var PushNotification = function() {
 };
