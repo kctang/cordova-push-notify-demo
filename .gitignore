@@ -4,3 +4,34 @@ out
 src/www/components
 android/assets/www
 android/gen
+
+# TODO: remove this when no longer needed
+# demo code (for local reference only)
+src/www/lib/jquery.mobile-1.3.0/demos
+
+# reference: http://shanesbrain.net/2008/7/9/using-xcode-with-git
+# xcode noise
+build/*
+*.pbxuser
+*.mode1v3
+# old skool
+.DS_Store
+profile
+
+# reference: https://github.com/github/gitignore/blob/master/Objective-C.gitignore
+# Xcode
+.DS_Store
+*/build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+*.hmap
