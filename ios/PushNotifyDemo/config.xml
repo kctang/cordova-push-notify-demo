@@ -56,6 +56,8 @@
         <plugin name="Battery" value="CDVBattery" />
         <plugin name="Globalization" value="CDVGlobalization" />
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+        
+        <plugin name="PushPlugin" value="PushPlugin" />
     </plugins>
 
     <access origin="*" />

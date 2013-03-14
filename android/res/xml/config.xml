@@ -56,7 +56,10 @@
     <plugin name="Globalization" value="org.apache.cordova.Globalization"/>
     <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
 
+    <!--TODO: old - remove when no longer in use-->
     <plugin name="PushPlugin" value="net.big2.pushnotify.PushNotifyPlugin" />
+
+    <plugin name="PushNotify" value="net.big2.pushnotify.PushNotifyPlugin" />
 
 </plugins>
 </cordova>

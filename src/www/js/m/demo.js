@@ -24,17 +24,17 @@ require(['jquery', 'jskit'], function () {
         console.log('later');
     });
 
-/*
-    document.addEventListener("backbutton", function (e) {
-        if ($("#home").length > 0) {
-            e.preventDefault();
-            notify.unregister();
-            navigator.app.exitApp();
-        } else {
-            navigator.app.backHistory();
-        }
-    }, false);
-*/
+    /*
+     document.addEventListener("backbutton", function (e) {
+     if ($("#home").length > 0) {
+     e.preventDefault();
+     notify.unregister();
+     navigator.app.exitApp();
+     } else {
+     navigator.app.backHistory();
+     }
+     }, false);
+     */
 
     function register() {
         if (window.device.platform == 'android' || window.device.platform == 'Android') {
@@ -48,7 +48,14 @@ require(['jquery', 'jskit'], function () {
                 {"senderID": senderId, "ecb": "onNotificationGCM"}
             );
         } else {
-            console.error('Only support Android for now');
+            notify.register(function tokenHandler(result) {
+                    console.log('XXX Device token: ' + result);
+                }, function errorHandler(error) {
+                    console.log('XXX ERROR: ' + error);
+                },
+                {
+                    'badge':'true', 'sound':'true', 'alert':'true', 'ecb': 'onNotificationAPN'
+                });
         }
     }
 
@@ -61,6 +68,26 @@ require(['jquery', 'jskit'], function () {
     }
 
 });
+
+function onNotificationAPN(event) {
+    if (event.alert) {
+        navigator.notification.alert(event.alert);
+    }
+
+/*
+    if (event.sound) {
+        var snd = new Media(event.sound);
+        snd.play();
+    }
+*/
+
+    if (event.badge) {
+        window.plugins.pushNotification.setApplicationIconBadgeNumber(function(arg1) {
+            console.log('XXX: set icon badge ok!');
+            console.log(arg1);
+        }, event.badge);
+    }
+}
 
 
 function onNotificationGCM(e) {
