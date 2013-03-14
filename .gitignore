@@ -4,6 +4,7 @@ out
 src/www/components
 android/assets/www
 android/gen
+ios/www
 
 # TODO: remove this when no longer needed
 # demo code (for local reference only)
