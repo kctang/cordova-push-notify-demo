@@ -7,9 +7,9 @@
         'jskit': '../components/jskit/jskit',
         'jskit-jquery': '../components/jskit-jquery/jskit-jquery',
         'underscore': '../components/underscore/underscore',
-        'cordova': '../lib/cordova-2.5.0',
         'text': '../components/requirejs-text/text',
-        'handlebars': '../components/handlebars.js/dist/handlebars'
+        'handlebars': '../components/handlebars.js/dist/handlebars',
+        'push-notify': '../lib/push-notify'
     },
 
     shim: {
@@ -27,8 +27,8 @@
     appDir: "../",
     dir: "../../../android/assets/www",
 
-//    optimize:"none",
-    optimize: "uglify",
+    optimize:"none",
+//    optimize: "uglify",
 
     optimizeCss: "standard",
     removeCombined: true,
@@ -45,6 +45,8 @@
 
     // -- patches
 
+    // --- TODO: this is only useful if cordova is added through requirejs
+    // --- TODO: will need to include android/ios specific cordova js
     // https://github.com/jrburke/r.js/issues/170#issuecomment-5854459
     onBuildRead: function (moduleName, path, contents) {
         if (path.indexOf('cordova-2.5.0.js') === -1) {

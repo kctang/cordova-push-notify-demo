@@ -2,6 +2,7 @@ package net.big2.pushnotify;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
@@ -13,6 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.apache.cordova.api.LOG.d;
 import static org.apache.cordova.api.LOG.e;
 
 
@@ -22,8 +28,8 @@ public class PushNotifyPlugin extends CordovaPlugin {
     public static final String ACTION_REGISTER = "register";
     public static final String ACTION_UNREGISTER = "unregister";
 
-    public static final String DATA_SENDER_ID = "senderID";
-    public static final String DATA_GCM_CALLBACK = "ecb";
+    public static final String DATA_SENDER_ID = "senderId";
+    public static final String DATA_GCM_CALLBACK = "gcmCallback";
 
     public static Activity activity;
     public static CordovaWebView staticWebView;
@@ -40,6 +46,8 @@ public class PushNotifyPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         boolean success = true;
 
+        Context context = cordova.getActivity().getApplicationContext();
+
 
         if (ACTION_REGISTER.equals(action)) {
             try {
@@ -48,30 +56,25 @@ public class PushNotifyPlugin extends CordovaPlugin {
                 gcmCallback = data.getJSONObject(0).getString(DATA_GCM_CALLBACK);
 
                 String senderId = data.getJSONObject(0).getString(DATA_SENDER_ID);
-                if (!GCMRegistrar.isRegistered(cordova.getActivity())) {
-                    GCMRegistrar.register(cordova.getActivity(), senderId);
+                if (!GCMRegistrar.isRegistered(context)) {
+                    GCMRegistrar.register(context, senderId);
+                } else {
+                    d(TAG, "Device was previously registered to GCM");
                 }
             } catch (Exception e) {
                 e(TAG, "Error getting gcmCallback and/or senderId", e);
             }
 
         } else if (ACTION_UNREGISTER.equals(action)) {
-            GCMRegistrar.unregister(cordova.getActivity());
-            GCMRegistrar.onDestroy(cordova.getActivity());
+            GCMRegistrar.unregister(context);
+            GCMRegistrar.onDestroy(context);
+
         } else {
+            e(TAG, "Unknown plugin action [" + action + "]");
             success = false;
         }
 
         return success;
-    }
-
-    public static void sendJavaScript(JSONObject json) {
-        if (gcmCallback == null || staticWebView == null) {
-            Log.e(TAG, "Call 'register' action before receiving JavaScript data");
-        }
-        String script = "javascript:" + gcmCallback + "(" + json.toString() + ")";
-        Log.d(TAG, script);
-        staticWebView.sendJavascript(script);
     }
 
     public static void showToast(final String message) {
@@ -81,4 +84,38 @@ public class PushNotifyPlugin extends CordovaPlugin {
             }
         });
     }
+
+    public static void sendToCordova(String name) {
+        sendToCordova(name, Collections.EMPTY_MAP);
+    }
+
+    public static void sendToCordova(String name, String key, String value) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put(key, value);
+        sendToCordova(name, dataMap);
+    }
+
+    public static void sendToCordova(String name, Map<String, Object> dataMap) {
+        try {
+            JSONObject json = new JSONObject();
+            for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+                json.put(entry.getKey(), entry.getValue());
+            }
+            sendToCordova(name, json);
+        } catch (JSONException e) {
+            Log.e(TAG, "Error processing GCM message", e);
+        }
+    }
+
+    private static void sendToCordova(String name, JSONObject json) {
+        if (gcmCallback == null) {
+            // TODO: FIX THIS - detect app foreground/backgroun & do native notification
+            Log.e(TAG, "Cannot send JavaScript to Cordova (gcmCallback is null)");
+        } else {
+            String script = "javascript:" + gcmCallback + "(\"" + name + "\", " + json.toString() + ")";
+            Log.d(TAG, script);
+            staticWebView.sendJavascript(script);
+        }
+    }
+
 }

@@ -7,9 +7,9 @@ require.config({
         'jskit': '../components/jskit/jskit',
         'jskit-jquery': '../components/jskit-jquery/jskit-jquery',
         'underscore': '../components/underscore/underscore',
-        'cordova': '../lib/cordova-2.5.0',
         'text': '../components/requirejs-text/text',
-        'handlebars': '../components/handlebars.js/dist/handlebars'
+        'handlebars': '../components/handlebars.js/dist/handlebars',
+        'push-notify': '../lib/push-notify'
     },
 
     shim: {
@@ -31,7 +31,7 @@ var modules = {
     ],
     'jqmReady': [
         // pageInit should not be here
-        'm/demo'
+        'm/push-notify-demo'
     ]
 }
 

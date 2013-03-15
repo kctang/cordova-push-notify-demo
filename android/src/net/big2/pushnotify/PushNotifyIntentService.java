@@ -3,63 +3,49 @@ package net.big2.pushnotify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import com.google.android.gcm.GCMBaseIntentService;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static net.big2.pushnotify.PushNotifyPlugin.showToast;
+import static net.big2.pushnotify.PushNotifyPlugin.sendToCordova;
 
 public class PushNotifyIntentService extends GCMBaseIntentService {
-    private Logger log = Logger.getLogger(PushNotifyIntentService.class.getName());
+    public static final String TAG = PushNotifyIntentService.class.getName();
+
+    public static final String EVENT_MESSAGE = "message";
+    public static final String EVENT_ERROR = "error";
+    public static final String EVENT_REGISTER = "register";
+    public static final String EVENT_UNREGISTER = "unregister";
 
     @Override
     protected void onMessage(Context context, Intent intent) {
-        log.fine("Message received [" + String.valueOf(intent));
+        Log.d(TAG, "Message received [" + String.valueOf(intent));
 
         Map<String, Object> dataMap = extrasToMap(intent.getExtras());
-        sendToCordova(dataMap);
+        sendToCordova(EVENT_MESSAGE, dataMap);
     }
 
     @Override
     protected void onError(Context context, String errorId) {
-        log.severe("Error received [" + errorId + "]");
+        Log.e(TAG, "Error received [" + errorId + "]");
+        sendToCordova(EVENT_ERROR, "errorId", errorId);
     }
 
     @Override
     protected void onRegistered(Context context, String regId) {
-        log.fine("Registered [" + regId + "]");
-        sendToCordova("regId", regId);
+        Log.d(TAG, "Registered [" + regId + "]");
+        sendToCordova(EVENT_REGISTER, "regId", regId);
     }
 
     @Override
     protected void onUnregistered(Context context, String regId) {
-        log.fine("Unregistered [" + regId + "]");
-        sendToCordova("regId", regId);
-    }
+        Log.d(TAG, "Unregistered [" + regId + "]");
 
-    private void sendToCordova(Map<String, Object> dataMap) {
-        try {
-            JSONObject json = new JSONObject();
-            for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
-                json.put(entry.getKey(), entry.getValue());
-            }
-            PushNotifyPlugin.sendJavaScript(json);
-        } catch (JSONException e) {
-            showToast("Error processing GCM message");
-            log.log(Level.SEVERE, "Error processing GCM message", e);
+        if (regId != null && regId.length() > 0) {
+            sendToCordova(EVENT_UNREGISTER, "regId", regId);
         }
-    }
-
-    private void sendToCordova(String key, String value) {
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put(key, value);
-        sendToCordova(dataMap);
     }
 
     private Map<String, Object> extrasToMap(Bundle extras) {

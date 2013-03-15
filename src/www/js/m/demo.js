@@ -37,13 +37,13 @@ require(['jquery', 'jskit'], function () {
      */
 
     function register() {
-        if (window.device.platform == 'android' || window.device.platform == 'Android') {
+        if (window.device.platform == 'Android') {
             notify.register(function (result) {
                     // registered successfully
-                    console.log(result);
+                    console.log('AAA: ' + result);
                 }, function (error) {
                     // error handler
-                    console.log(error);
+                    console.log('BBB: ' + error);
                 },
                 {"senderID": senderId, "ecb": "onNotificationGCM"}
             );
@@ -54,14 +54,14 @@ require(['jquery', 'jskit'], function () {
                     console.log('XXX ERROR: ' + error);
                 },
                 {
-                    'badge':'true', 'sound':'true', 'alert':'true', 'ecb': 'onNotificationAPN'
+                    'badge': 'true', 'sound': 'true', 'alert': 'true', 'ecb': 'onNotificationAPN'
                 });
         }
     }
 
     function unregister() {
         notify.unregister(function (result) {
-            console.log(result);
+            console.log('UUU: ' + result);
         }, function (error) {
             console.log(error);
         });
@@ -74,15 +74,15 @@ function onNotificationAPN(event) {
         navigator.notification.alert(event.alert);
     }
 
-/*
-    if (event.sound) {
-        var snd = new Media(event.sound);
-        snd.play();
-    }
-*/
+    /*
+     if (event.sound) {
+     var snd = new Media(event.sound);
+     snd.play();
+     }
+     */
 
     if (event.badge) {
-        window.plugins.pushNotification.setApplicationIconBadgeNumber(function(arg1) {
+        window.plugins.pushNotification.setApplicationIconBadgeNumber(function (arg1) {
             console.log('XXX: set icon badge ok!');
             console.log(arg1);
         }, event.badge);
