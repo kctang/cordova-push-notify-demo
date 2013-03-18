@@ -2,10 +2,15 @@ package net.big2.pushnotify;
 
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
+import net.big2.demo.pnd.R;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaInterface;
@@ -102,6 +107,7 @@ public class PushNotifyPlugin extends CordovaPlugin {
     }
 
     public static void sendToCordova(String name) {
+        //noinspection unchecked
         sendToCordova(name, Collections.EMPTY_MAP);
     }
 
@@ -134,11 +140,28 @@ public class PushNotifyPlugin extends CordovaPlugin {
     private static void backgroundHandler(String name, JSONObject json) {
         showToast(name);
         d(TAG, name + " - " + json.toString());
+
+        Intent intent = new Intent(activity , activity.getClass());
+        PendingIntent pIntent = PendingIntent.getActivity(activity, 0, intent, 0);
+
+        Notification notify = new Notification.Builder(activity)
+                .setContentTitle(activity.getString(R.string.app_name))
+                .setContentText(json.toString())
+                .setSmallIcon(R.drawable.icon)
+                .setContentIntent(pIntent).build();
+
+        NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Hide the notification after its selected
+        notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(0, notify);
+
+
     }
 
     private static void foregroundHandler(String name, JSONObject json) {
         if (gcmCallback == null) {
-            // TODO: FIX THIS - detect app foreground/backgroun & do native notification
+            // TODO: FIX THIS - detect app foreground/background & do native notification
             Log.e(TAG, "Cannot send JavaScript to Cordova (gcmCallback is null)");
         } else {
             String script = "javascript:" + gcmCallback + "(\"" + name + "\", " + json.toString() + ")";
