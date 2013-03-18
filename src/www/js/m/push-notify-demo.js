@@ -33,8 +33,6 @@ function gcmCallback(event, data) {
     require(['push-notify'], function (pn) {
         switch (event) {
             case pn.EVENT_MESSAGE:
-                // TODO: determine foreground/background handling!!!
-
                 alert('Message from GCM');
                 alert(JSON.stringify(data));
                 break;
@@ -52,8 +50,6 @@ function gcmCallback(event, data) {
     });
 }
 
-// TODO: impl APNS!
-// MAKE THIS WORK!
 function onNotificationAPN(event) {
     if (event.alert) {
         navigator.notification.alert(event.alert);

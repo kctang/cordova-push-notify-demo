@@ -31,15 +31,17 @@ public class PushNotifyPlugin extends CordovaPlugin {
     public static final String DATA_SENDER_ID = "senderId";
     public static final String DATA_GCM_CALLBACK = "gcmCallback";
 
-    public static Activity activity;
-    public static CordovaWebView staticWebView;
-    public static String gcmCallback;
+    private static Activity activity;
+    private static CordovaWebView staticWebView;
+    private static String gcmCallback;
+    private static boolean foreground; // indicates if the activity is in foreground
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         activity = cordova.getActivity();
         staticWebView = webView;
+        foreground = true;
     }
 
     @Override
@@ -77,7 +79,21 @@ public class PushNotifyPlugin extends CordovaPlugin {
         return success;
     }
 
-    public static void showToast(final String message) {
+    @Override
+    public void onPause(boolean multitasking) {
+        super.onPause(multitasking);
+
+        foreground = false;
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
+        super.onResume(multitasking);
+
+        foreground = true;
+    }
+
+    private static void showToast(final String message) {
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
@@ -108,6 +124,19 @@ public class PushNotifyPlugin extends CordovaPlugin {
     }
 
     private static void sendToCordova(String name, JSONObject json) {
+        if (foreground) {
+            foregroundHandler(name, json);
+        } else {
+            backgroundHandler(name, json);
+        }
+    }
+
+    private static void backgroundHandler(String name, JSONObject json) {
+        showToast(name);
+        d(TAG, name + " - " + json.toString());
+    }
+
+    private static void foregroundHandler(String name, JSONObject json) {
         if (gcmCallback == null) {
             // TODO: FIX THIS - detect app foreground/backgroun & do native notification
             Log.e(TAG, "Cannot send JavaScript to Cordova (gcmCallback is null)");

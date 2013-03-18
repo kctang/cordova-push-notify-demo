@@ -58,7 +58,8 @@
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
 
         <!--TODO: need to change native ios code (replace PushPlugin-->
-        <plugin name="PushNotify" value="PushPlugin" />
+        <!--TODO: is onload=true necessary for ios?-->
+        <plugin name="PushNotify" value="PushPlugin" onload="true"/>
     </plugins>
 
     <access origin="*" />
