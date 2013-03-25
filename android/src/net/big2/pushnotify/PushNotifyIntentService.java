@@ -15,9 +15,10 @@ public class PushNotifyIntentService extends GCMBaseIntentService {
     public static final String TAG = PushNotifyIntentService.class.getName();
 
     public static final String EVENT_MESSAGE = "message";
-    public static final String EVENT_ERROR = "error";
     public static final String EVENT_REGISTER = "register";
     public static final String EVENT_UNREGISTER = "unregister";
+    public static final String EVENT_ERROR = "error";
+    public static final String EVENT_INFO = "info";
 
     @Override
     protected void onMessage(Context context, Intent intent) {

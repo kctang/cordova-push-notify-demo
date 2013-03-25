@@ -67,14 +67,20 @@ public class PushNotifyPlugin extends CordovaPlugin {
                     GCMRegistrar.register(context, senderId);
                 } else {
                     d(TAG, "Device was previously registered to GCM");
+                    sendToCordova(PushNotifyIntentService.EVENT_INFO, "message", "Device was previously registered to GCM");
                 }
             } catch (Exception e) {
-                e(TAG, "Error getting gcmCallback and/or senderId", e);
+                e(TAG, "Error registering  gcmCallback and/or senderId", e);
+                success = false;
             }
 
         } else if (ACTION_UNREGISTER.equals(action)) {
-            GCMRegistrar.unregister(context);
-            GCMRegistrar.onDestroy(context);
+            if (GCMRegistrar.isRegistered(context)) {
+                GCMRegistrar.unregister(context);
+                GCMRegistrar.onDestroy(context);
+            } else {
+                sendToCordova(PushNotifyIntentService.EVENT_INFO, "message", "Device is not registered to GCM");
+            }
 
         } else {
             e(TAG, "Unknown plugin action [" + action + "]");

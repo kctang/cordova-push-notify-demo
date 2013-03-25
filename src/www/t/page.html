@@ -7,46 +7,31 @@
 <div data-role="page" id="home">
     <div data-role="panel" id="left-panel">
 
-        <ul data-role="listview" data-inset="true">
-<!--
-            <li data-role="fieldcontain">
-                <label for="email">Email</label>
-                <input id="email">
-            </li>
-            <li>
-                <label for="name">Name</label>
-                <input id="name">
-            </li>
--->
-            <li class="ui-body ui-body-b">
-                <button id="register-device">Register Device</button>
-                <button id="unregister-device">Unregister Device</button>
-            </li>
-        </ul>
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <a id="register" data-role="button" data-mini="true">Register</a>
+            </div>
+            <div class="ui-block-b">
+                <a id="unregister" data-role="button" data-mini="true">Unregister</a>
+            </div>
+            <div class="ui-block-a">
+                <a id="clear" data-role="button" data-mini="true">Clear Screen</a>
+            </div>
+        </div>
 
     </div>
 
     <div data-role="header" data-position="fixed">
-        <h1>Push Notification</h1>
+        <h1>Push Notify</h1>
         <a href="#left-panel" data-icon="arrow-r" data-iconpos="notext">Open left panel</a>
     </div>
+
     <div data-role="content">
+        <div data-role="context" id="out"></div>
 
-        <ul data-role="listview" data-inset="true">
-            <li class="ui-body ui-body-b">
-                <button id="check-status">Check Status</button>
-            </li>
-            <li class="ui-body ui-body-b">
-                <button id="notify-now">Notify Now</button>
-            </li>
-            <li class="ui-body ui-body-b">
-                <button id="notify-later">Notify Later</button>
-            </li>
-        </ul>
-
-    </div>
-    <div data-role="footer" data-position="fixed">
-        <h1>* Demo *</h1>
+        <div data-role="footer" data-position="fixed">
+            <h1>* Demo *</h1>
+        </div>
     </div>
 </div>
 

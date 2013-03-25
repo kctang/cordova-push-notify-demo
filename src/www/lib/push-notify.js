@@ -1,19 +1,17 @@
-/**
- * Define a module to communicate with PushNotify plugin.
- */
 define([
-    // TODO: ideally, cordova is a requirejs dependency
-    // 'cordova'
-], function (cordova) {
+    // TODO: ideally, cordova is a RequireJS dependency - can't get it to work
+], function () {
 
     // specified in cordova's config.xml
-    var PLUGIN_NAME = 'PushNotify';
+    var PLUGIN_NAME = 'PushPlugin';
 
     var PushNotify = function () {
+        // events that can be triggered from native code
         this.EVENT_MESSAGE = 'message';
-        this.EVENT_ERROR = 'error';
         this.EVENT_REGISTER = 'register';
         this.EVENT_UNREGISTER = 'unregister';
+        this.EVENT_ERROR = 'error';
+        this.EVENT_INFO = 'info';
 
         var nativeSuccess = function (msg) {
             console.debug('Successful native call [' + msg + ']');
@@ -89,12 +87,12 @@ define([
 
         this.isAndroid = function() {
             // TODO: refactor and hide this in register methods - just log debug if wrong platform
-            return window.device.platform === 'Android';
+            return window.device !== undefined && window.device.platform === 'Android';
         }
 
         this.isIos = function() {
             // TODO: refactor and hide this in register methods - just log debug if wrong platform
-            return window.device.platform === 'iOS';
+            return window.device !== undefined && window.device.platform === 'iOS';
         }
 
     }

@@ -66,7 +66,7 @@
     if ([[options objectForKey:@"alert"] isEqualToString:@"true"])
         notificationTypes |= UIRemoteNotificationTypeAlert;
     
-    self.callback = [options objectForKey:@"ecb"];
+    self.callback = [options objectForKey:@"apnsCallback"];
 
     if (notificationTypes == UIRemoteNotificationTypeNone)
         NSLog(@"PushPlugin.register: Push notification type is set to none");

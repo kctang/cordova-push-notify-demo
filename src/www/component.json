@@ -1,5 +1,5 @@
 {
-  "name": "www",
+  "name": "cordova-push-notify-demo",
   "version": "0.0.1",
   "main": [
     "main.js"

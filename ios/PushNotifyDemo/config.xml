@@ -57,9 +57,7 @@
         <plugin name="Globalization" value="CDVGlobalization" />
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
 
-        <!--TODO: need to change native ios code (replace PushPlugin-->
-        <!--TODO: is onload=true necessary for ios?-->
-        <plugin name="PushNotify" value="PushPlugin" onload="true"/>
+        <plugin name="PushPlugin" value="PushPlugin"/>
     </plugins>
 
     <access origin="*" />
